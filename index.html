@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quality Control Inspection Tool by Ayanda.io</title>
+  <style>
+    body { 
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+      margin: 20px; 
+      background-image: url(image.jpg); 
+      background-repeat:no-repeat; 
+      background-attachment:fixed; 
+      background-size: cover;
+      color: #fff;
+    }
+    h1, h2 { 
+      text-align: center; 
+      color: #1199b8; 
+      text-shadow: 1px 2px 2px rgba(0,0,0,0.5);
+    }
+    label { 
+      display: block; 
+      margin: 10px 0 5px; 
+      font-weight: bold; 
+    }
+    input[type="text"], 
+    input[type="date"],
+    input[type="checkbox"] {
+      margin-right: 8px;
+    }
+    input[type="text"], 
+    input[type="date"] { 
+      width: 100%; 
+      padding: 8px; 
+      margin-bottom: 10px; 
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background-color: rgba(255,255,255,0.9);
+    }
+    .section { 
+      background: rgba(0, 0, 0, 0.7); 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      border-radius: 8px; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.3); 
+    }
+    textarea { 
+      width: 100%; 
+      height: 60px; 
+      margin-bottom: 15px; 
+      padding: 8px;
+      border-radius: 4px;
+      background-color: rgba(255,255,255,0.9);
+    }
+    button { 
+      padding: 10px 20px; 
+      background: #007bff; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      display: block; 
+      margin: 15px auto; 
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover { 
+      background: #0056b3; 
+    }
+    button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+    #output { 
+      background: rgba(255, 255, 255, 0.9); 
+      padding: 25px; 
+      margin-top: 20px; 
+      border-radius: 5px; 
+      color: #000; 
+    }
+    footer { 
+      font-size: smaller; 
+      color:rgb(170, 167, 167); 
+      text-align: right; 
+      padding-top: 15px;
+    }
+    a { 
+      color: rgb(50, 240, 240);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .checkbox-item {
+      margin-bottom: 5px;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 10px 0;
+      color: #fff;
+    }
+    .error {
+      color: #ff6b6b;
+      font-weight: bold;
+      display: none;
+      text-align: center;
+    }
+    .signature-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .signature-table th, 
+    .signature-table td {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+    .signature-line {
+      height: 1px;
+      background: #000;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Quality Control Inspection</h1>
+
+<div class="section">
+  <label>Project Name: <input type="text" id="project_name" required></label>
+  <label>Project Number: <input type="text" id="project_number" required></label>
+  <label>Client: <input type="text" id="client" required></label>
+  <label>Client Representative: <input type="text" id="client_rep" required></label>
+  <hr>
+  <label>Date: <input type="date" id="date" required></label>
+  <label>Area/Element: <input type="text" id="area_element" required></label>
+  <label>Drawing Revision: <input type="text" id="drawing_revision" required></label>
+  <label>Designed by: <input type="text" id="designed_by" value="Ayanda Mthombeni" required></label>
+</div>
+
+<!-- Foundation Section -->
+<div class="section" id="foundation">
+  <h2>1. Foundation Work</h2>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="excavation"> Excavation meets required depth/width?</label>
+    <textarea id="excavation_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="blinding"> Blinding complete and smooth?</label>
+    <textarea id="blinding_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="reinforcement"> Reinforcement as per drawing?</label>
+    <textarea id="reinforcement_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="footing"> Footing correct height?</label>
+    <textarea id="footing_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="brickwork"> Brickwork quality accepted?</label>
+    <textarea id="brickwork_comment" placeholder="Comments..."></textarea>
+  </div>
+</div>
+
+<!-- Structure Section -->
+<div class="section" id="structure">
+  <h2>2. Structure</h2>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="superstructure"> Superstructure according to the specification?</label>
+    <textarea id="superstructure_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="openings"> All openings to right size and position?</label>
+    <textarea id="openings_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="plastering"> Plastering quality accepted?</label>
+    <textarea id="plastering_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="painting"> Right number of painting coats?</label>
+    <textarea id="painting_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="doors"> Door plumb (vertically straight)?</label>
+    <textarea id="doors_comment" placeholder="Comments..."></textarea>
+  </div>
+</div>
+
+<!-- Finishing Section -->
+<div class="section" id="finishing">
+  <h2>3. Finishing</h2>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="concrete"> All shear walls and slabs smooth?</label>
+    <textarea id="concrete_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="floor"> Floor covering installed?</label>
+    <textarea id="floor_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="ceiling"> Type of ceiling correct?</label>
+    <textarea id="ceiling_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="shopfront"> Shopfront clean?</label>
+    <textarea id="shopfront_comment" placeholder="Comments..."></textarea>
+  </div>
+  <div class="checkbox-item">
+    <label><input type="checkbox" id="tiling"> Tiling accepted?</label>
+    <textarea id="tiling_comment" placeholder="Comments..."></textarea>
+  </div>
+</div>
+
+<div class="error" id="form-error"></div>
+<div class="loading" id="loading">Generating PDF, please wait...</div>
+
+<button onclick="validateAndGenerateReport()">Submit Inspection</button>
+<button onclick="clearForm()" style="background: #6c757d;">Clear Form</button>
+<div id="output"></div>
+<button id="downloadBtn" style="display:none;" onclick="downloadPDF()">Download as PDF</button>
+<button id="printBtn" style="display:none; background: #28a745;" onclick="window.print()">Print Report</button>
+
+<footer>Code by <a href="https://www.ayandaio.netlify.app" target="_blank">Ayanda Mthombeni</a></footer>
+
+<!-- jsPDF and html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  // Global variable to store report HTML
+  let currentReportHtml = '';
+
+  function validateForm() {
+    const requiredFields = [
+      'project_name', 
+      'project_number', 
+      'client', 
+      'client_rep', 
+      'date', 
+      'area_element', 
+      'drawing_revision',
+      'designed_by'
+    ];
+    
+    for (const fieldId of requiredFields) {
+      const field = document.getElementById(fieldId);
+      if (!field || !field.value.trim()) {
+        document.getElementById('form-error').textContent = `Please fill in all required fields (${fieldId.replace('_', ' ')} is missing)`;
+        document.getElementById('form-error').style.display = 'block';
+        return false;
+      }
+    }
+    
+    document.getElementById('form-error').style.display = 'none';
+    return true;
+  }
+
+  function validateAndGenerateReport() {
+    if (validateForm()) {
+      generateReport();
+    }
+  }
+
+  function generateReport() {
+    const items = [
+      { id: "excavation", comment: "excavation_comment", label: "Excavation meets required depth/width?" },
+      { id: "blinding", comment: "blinding_comment", label: "Blinding complete and smooth?" },
+      { id: "reinforcement", comment: "reinforcement_comment", label: "Reinforcement as per drawing?" },
+      { id: "footing", comment: "footing_comment", label: "Footing correct height?" },
+      { id: "brickwork", comment: "brickwork_comment", label: "Brickwork quality accepted?" },
+      { id: "superstructure", comment: "superstructure_comment", label: "Superstructure according to the specification?" },
+      { id: "openings", comment: "openings_comment", label: "All openings to right size and position?" },
+      { id: "plastering", comment: "plastering_comment", label: "Plastering quality accepted?" },
+      { id: "painting", comment: "painting_comment", label: "Right number of painting coats?" },
+      { id: "doors", comment: "doors_comment", label: "Door plumb (vertically straight)?" },
+      { id: "concrete", comment: "concrete_comment", label: "All shear walls and slabs smooth?" },
+      { id: "floor", comment: "floor_comment", label: "Floor covering installed?" },
+      { id: "ceiling", comment: "ceiling_comment", label: "Type of ceiling correct?" },
+      { id: "shopfront", comment: "shopfront_comment", label: "Shopfront clean?" },
+      { id: "tiling", comment: "tiling_comment", label: "Tiling accepted?" }
+    ];
+
+    const header = `
+      <h2>Quality Control Inspection Report</h2>
+      <p><strong>Project Name:</strong> ${document.getElementById('project_name').value}</p>
+      <p><strong>Project Number:</strong> ${document.getElementById('project_number').value}</p>
+      <p><strong>Client:</strong> ${document.getElementById('client').value}</p>
+      <p><strong>Client Representative:</strong> ${document.getElementById('client_rep').value}</p>
+      <p><strong>Date:</strong> ${document.getElementById('date').value}</p>
+      <p><strong>Area/Element:</strong> ${document.getElementById('area_element').value}</p>
+      <p><strong>Drawing Revision:</strong> ${document.getElementById('drawing_revision').value}</p>
+      <p><strong>Designed by:</strong> ${document.getElementById('designed_by').value}</p>
+      <h3>Inspection Results</h3>
+    `;
+
+    let report = header + "<ul style='list-style-type: none; padding-left: 0;'>";
+    
+    items.forEach(item => {
+      const checkbox = document.getElementById(item.id);
+      const commentBox = document.getElementById(item.comment);
+      const checked = checkbox.checked ? "✓ Yes" : "✗ No";
+      const comment = commentBox.value ? commentBox.value : "No comments";
+      
+      report += `
+        <li style="margin-bottom: 15px;">
+          <strong>${item.label}</strong><br>
+          <span style="color: ${checkbox.checked ? '#28a745' : '#dc3545'}">${checked}</span><br>
+          <strong>Comments:</strong> ${comment}
+        </li>
+        <hr style="border-top: 1px dashed #ccc; margin: 10px 0;">
+      `;
+    });
+    
+    report += `</ul>
+      <h3>Signatures</h3>
+      <table class="signature-table">
+        <tr>
+          <th>Role</th>
+          <th>Name</th>
+          <th>Signature</th>
+          <th>Date</th>
+        </tr>
+        <tr>
+          <td>Inspector</td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+        </tr>
+        <tr>
+          <td>Client Representative</td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+        </tr>
+        <tr>
+          <td>Project Manager</td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+        </tr>
+        <tr>
+          <td>Sub-Contractor</td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+          <td><div class="signature-line"></div></td>
+        </tr>
+      </table>
+      <p style="text-align: center; margin-top: 30px;">
+        <strong>Report Generated:</strong> ${new Date().toLocaleString()}
+      </p>
+    `;
+
+    currentReportHtml = report;
+    document.getElementById("output").innerHTML = report;
+    document.getElementById("downloadBtn").style.display = "inline-block";
+    document.getElementById("printBtn").style.display = "inline-block";
+  }
+
+  async function downloadPDF() {
+    const loadingElement = document.getElementById('loading');
+    const downloadBtn = document.getElementById('downloadBtn');
+    
+    try {
+      loadingElement.style.display = 'block';
+      downloadBtn.disabled = true;
+      
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const element = document.getElementById("output");
+      
+      await html2canvas(element, { 
+        scale: 2,
+        logging: false,
+        useCORS: true
+      }).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        const imgProps = doc.getImageProperties(imgData);
+        const pdfWidth = doc.internal.pageSize.getWidth() - 20;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        doc.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
+        doc.save(`QC-Inspection-Report-${document.getElementById('project_name').value}-${new Date().toISOString().slice(0,10)}.pdf`);
+      });
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("Error generating PDF. Please try again or use the print option.");
+    } finally {
+      loadingElement.style.display = 'none';
+      downloadBtn.disabled = false;
+    }
+  }
+
+  function clearForm() {
+    if (confirm('Are you sure you want to clear the entire form?')) {
+      // Clear all input fields
+      const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
+      inputs.forEach(input => {
+        input.value = '';
+      });
+      
+      // Uncheck all checkboxes
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      
+      // Clear output
+      document.getElementById("output").innerHTML = '';
+      document.getElementById("downloadBtn").style.display = "none";
+      document.getElementById("printBtn").style.display = "none";
+      document.getElementById("form-error").style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>
